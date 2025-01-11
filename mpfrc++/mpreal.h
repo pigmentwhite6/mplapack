@@ -10,6 +10,12 @@
         Contact e-mail: maho.nakata@gmail.com
 
     Copyright (c) 2010-2021 Nakata Maho
+    
+    	Forked and adapted by Prajval K
+        https://github.com/pigmentwhite6/mplapack
+        Contact e-mail: prajvalk.digital@gmail.com
+        
+    Copyright (c) 2025 Prajval K
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -49,7 +55,7 @@
 #include "mpfr.h"
 
 #ifndef ___MPREAL_DEFAULT_PRECISION___
-#define ___MPREAL_DEFAULT_PRECISION___ 512
+#define ___MPREAL_DEFAULT_PRECISION___ 2048
 #endif
 
 #if defined ___MPLAPACK_BUILD_WITH_GMP___
@@ -103,6 +109,8 @@ class mpreal {
     static mp_prec_t default_prec;
     static int default_base;
     static int double_bits;
+    
+    static void            set_default_prec(mp_prec_t prec);
 
     mpreal(const mpz_t u, mp_prec_t prec = default_prec, mp_rnd_t mode = default_rnd);
     mpreal(const mpq_t u, mp_prec_t prec = default_prec, mp_rnd_t mode = default_rnd);
@@ -2333,6 +2341,12 @@ inline double cast2double(const mpreal &b) {
     double p;
     p = b;
     return p;
+}
+
+inline void mpreal::set_default_prec(mp_prec_t prec)
+{
+    mpfr_set_default_prec(prec);
+    default_prec = prec;
 }
 
 #if defined ___MPLAPACK_BUILD_WITH__FLOAT128___ && !defined ___MPLAPACK__FLOAT128_IS_LONGDOUBLE___ && !defined ___MPLAPACK_LONGDOUBLE_IS_BINARY128___
