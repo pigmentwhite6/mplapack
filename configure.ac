@@ -2,17 +2,6 @@ dnl
 dnl Configure for MPLAPACK
 dnl
 
-dnl append to AC_CONFIG_FILES whenever N. Maho pushes it upstream
-dnl
-dnl mplapack/test/compare/Makefile
-dnl mplapack/test/compare/gmp/Makefile
-dnl mplapack/test/compare/mpfr/Makefile
-dnl mplapack/test/compare/qd/Makefile
-dnl mplapack/test/compare/dd/Makefile
-dnl mplapack/test/compare/double/Makefile
-dnl mplapack/test/compare/_Float64x/Makefile
-dnl mplapack/test/compare/_Float128/Makefile
-
 m4_define([MPLAPACK_VER_MAJOR], [2])
 m4_define([MPLAPACK_VER_MINOR], [0])
 m4_define([MPLAPACK_VER_PATCH], [1])
@@ -965,6 +954,14 @@ mplapack/test/eig/dd/Makefile
 mplapack/test/eig/double/Makefile
 mplapack/test/eig/_Float64x/Makefile
 mplapack/test/eig/_Float128/Makefile
+mplapack/test/compare/Makefile
+mplapack/test/compare/gmp/Makefile
+mplapack/test/compare/mpfr/Makefile
+mplapack/test/compare/qd/Makefile
+mplapack/test/compare/dd/Makefile
+mplapack/test/compare/double/Makefile
+mplapack/test/compare/_Float64x/Makefile
+mplapack/test/compare/_Float128/Makefile
 mplapack/Makefile
 external/Makefile
 external/gmp/Makefile

@@ -2,6 +2,10 @@
  * Copyright (c) 2010-2021
  *	Nakata, Maho
  * 	All rights reserved.
+ * 
+ * Copyright (c) 2025
+ *  Prajval K
+ *  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -171,12 +175,12 @@ class mpcomplex {
     inline void real(const mpreal r) // constructor
     {
         mpreal tmp(r); // required as r is const.
-        mpc_real(mpfr_ptr(tmp), mpc, mpreal::default_rnd);
+        mpc_real(tmp.mpfr_ptr(), mpc, mpreal::default_rnd);
     }
     inline void imag(const mpreal r) // constructor
     {
         mpreal tmp(r);
-        mpc_imag(mpfr_ptr(tmp), mpc, mpreal::default_rnd);
+        mpc_imag(tmp.mpfr_ptr(), mpc, mpreal::default_rnd);
     }
     // other functions
     friend const mpreal abs(const mpcomplex &a, mpfr_rnd_t mode);
@@ -381,7 +385,7 @@ inline mpcomplex::mpcomplex(const mpreal &a, const mpreal &b) {
     pr = a.get_prec();
     pi = b.get_prec();
     mpc_init3(mpc, pr, pi);
-    mpc_set_fr_fr(mpc, (mpfr_ptr)tmp1, (mpfr_ptr)tmp2, default_rnd);
+    mpc_set_fr_fr(mpc, tmp1.mpfr_ptr(), tmp2.mpfr_ptr(), default_rnd);
 }
 
 inline mpcomplex::mpcomplex(const double &a, const double &b, mp_prec_t pr, mp_prec_t pi, mpc_rnd_t mode) {
@@ -395,7 +399,7 @@ inline mpcomplex::mpcomplex(const mpreal &a, const double &b) {
     pr = a.get_prec();
     pi = a.get_prec();
     mpc_init3(mpc, pr, pi);
-    mpc_set_fr_fr(mpc, (mpfr_ptr)tmp1, (mpfr_ptr)tmp2, default_rnd);
+    mpc_set_fr_fr(mpc, tmp1.mpfr_ptr(), tmp2.mpfr_ptr(), default_rnd);
 }
 
 inline mpcomplex::mpcomplex(const char *s, const char *t, mp_prec_t pr, mp_prec_t pi, mpc_rnd_t mode) {
@@ -414,7 +418,7 @@ inline mpcomplex::mpcomplex(const mpreal &a) {
     mpreal tmp(a);
     mp_prec_t pr = a.get_prec();
     mpc_init3(mpc, pr, pr);
-    mpc_set_fr(mpc, (mpfr_ptr)(tmp), default_rnd);
+    mpc_set_fr(mpc, tmp.mpfr_ptr(), default_rnd);
 }
 
 inline mpcomplex::mpcomplex(const mpfr_t a) {
@@ -495,7 +499,7 @@ inline mpcomplex &mpcomplex::operator+=(const std::complex<double> a) { return *
 inline mpcomplex &mpcomplex::operator+=(const std::complex<long double> a) { return *this += mpcomplex(a); }
 
 inline mpcomplex &mpcomplex::operator+=(const mpreal &a) {
-    mpc_add_fr(mpc, mpc, (mpfr_ptr)(&a), default_rnd);
+    mpc_add_fr(mpc, mpc, (&a)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -506,7 +510,7 @@ inline mpcomplex &mpcomplex::operator+=(const mpfr_t a) {
 
 inline mpcomplex &mpcomplex::operator+=(const double a) {
     mpreal p = a;
-    mpc_add_fr(mpc, mpc, (mpfr_ptr)(&p), default_rnd);
+    mpc_add_fr(mpc, mpc, (&p)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -599,7 +603,7 @@ inline mpcomplex &mpcomplex::operator-=(const std::complex<double> a) { return *
 inline mpcomplex &mpcomplex::operator-=(const std::complex<long double> a) { return *this -= mpcomplex(a); }
 
 inline mpcomplex &mpcomplex::operator-=(const mpreal &a) {
-    mpc_sub_fr(mpc, mpc, (mpfr_ptr)(&a), default_rnd);
+    mpc_sub_fr(mpc, mpc, (&a)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -610,7 +614,7 @@ inline mpcomplex &mpcomplex::operator-=(const mpfr_t a) {
 
 inline mpcomplex &mpcomplex::operator-=(const double a) {
     mpreal p = a;
-    mpc_sub_fr(mpc, mpc, (mpfr_ptr)(&p), default_rnd);
+    mpc_sub_fr(mpc, mpc, (&p)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -695,7 +699,7 @@ inline mpcomplex &mpcomplex::operator*=(const std::complex<double> a) { return *
 inline mpcomplex &mpcomplex::operator*=(const std::complex<long double> a) { return *this *= mpcomplex(a); }
 
 inline mpcomplex &mpcomplex::operator*=(const mpreal &a) {
-    mpc_mul_fr(mpc, mpc, (mpfr_ptr)(&a), default_rnd);
+    mpc_mul_fr(mpc, mpc, (&a)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -706,7 +710,7 @@ inline mpcomplex &mpcomplex::operator*=(const mpfr_t a) {
 
 inline mpcomplex &mpcomplex::operator*=(const double a) {
     mpreal p(a);
-    mpc_add_fr(mpc, mpc, (mpfr_ptr)(&p), default_rnd);
+    mpc_add_fr(mpc, mpc, (&p)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -786,7 +790,7 @@ inline mpcomplex &mpcomplex::operator/=(const mpc_t a) {
 inline mpcomplex &mpcomplex::operator/=(const std::complex<double> a) { return *this /= mpcomplex(a); }
 
 inline mpcomplex &mpcomplex::operator/=(const mpreal &a) {
-    mpc_div_fr(mpc, mpc, (mpfr_ptr)(&a), default_rnd);
+    mpc_div_fr(mpc, mpc, (&a)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -797,7 +801,7 @@ inline mpcomplex &mpcomplex::operator/=(const mpfr_t a) {
 
 inline mpcomplex &mpcomplex::operator/=(const double a) {
     mpreal p(a);
-    mpc_div_fr(mpc, mpc, (mpfr_ptr)(&p), default_rnd);
+    mpc_div_fr(mpc, mpc, (&p)->mpfr_ptr(), default_rnd);
     return *this;
 }
 
@@ -830,8 +834,8 @@ inline mpcomplex::operator std::complex<double>() const {
     std::complex<double> tmp;
     re = (*this).real();
     im = (*this).imag();
-    tmp.real(mpfr_get_d(re, MPC_RND_RE(default_rnd)));
-    tmp.imag(mpfr_get_d(im, MPC_RND_IM(default_rnd)));
+    tmp.real(mpfr_get_d(re.mpfr_srcptr(), MPC_RND_RE(default_rnd)));
+    tmp.imag(mpfr_get_d(im.mpfr_srcptr(), MPC_RND_IM(default_rnd)));
     return tmp;
 }
 
@@ -840,8 +844,8 @@ inline mpcomplex::operator std::complex<long double>() const {
     std::complex<long double> tmp;
     re = (*this).real();
     im = (*this).imag();
-    tmp.real(mpfr_get_ld(re, MPC_RND_RE(default_rnd)));
-    tmp.imag(mpfr_get_ld(im, MPC_RND_IM(default_rnd)));
+    tmp.real(mpfr_get_ld(re.mpfr_srcptr(), MPC_RND_RE(default_rnd)));
+    tmp.imag(mpfr_get_ld(im.mpfr_srcptr(), MPC_RND_IM(default_rnd)));
     return tmp;
 }
 
@@ -875,14 +879,14 @@ inline const mpcomplex operator/(const mpcomplex &a, const mpreal &b) {
 inline const mpreal abs(const mpcomplex &a, mpfr_rnd_t rnd_mode = mpreal::default_rnd) {
     mpreal x;
     mpcomplex y(a);
-    mpc_abs((mpfr_ptr)(&x), y.mpc, rnd_mode);
+    mpc_abs((&x)->mpfr_ptr(), y.mpc, rnd_mode);
     return x;
 }
 
 inline const mpreal norm(const mpcomplex &a, mpfr_rnd_t rnd_mode = mpreal::default_rnd) {
     mpreal x;
     mpcomplex y(a);
-    mpc_norm((mpfr_ptr)(&x), y.mpc, rnd_mode);
+    mpc_norm((&x)->mpfr_ptr(), y.mpc, rnd_mode);
     return x;
 }
 
@@ -895,7 +899,7 @@ inline const mpcomplex conj(const mpcomplex &a, mpc_rnd_t rnd_mode = mpcomplex::
 inline const mpreal arg(const mpcomplex &a, mpfr_rnd_t rnd_mode = mpreal::default_rnd) {
     mpreal x(a.real());
     mpcomplex y(a);
-    mpc_arg((mpfr_ptr)(&x), y.mpc, rnd_mode);
+    mpc_arg((&x)->mpfr_ptr(), y.mpc, rnd_mode);
     return x;
 }
 
@@ -1032,8 +1036,8 @@ inline mpc_class cast2mpc_class(const mpcomplex &b) {
 
     mpfr_init2(tmpre2, pr);
     mpfr_init2(tmpim2, pi);
-    mpfr_set(tmpre2, (mpfr_ptr)are, MPC_RND_RE(mpcomplex::default_rnd));
-    mpfr_set(tmpim2, (mpfr_ptr)aim, MPC_RND_IM(mpcomplex::default_rnd));
+    mpfr_set(tmpre2, are.mpfr_ptr(), MPC_RND_RE(mpcomplex::default_rnd));
+    mpfr_set(tmpim2, aim.mpfr_ptr(), MPC_RND_IM(mpcomplex::default_rnd));
 
     mpf_init2(tmpre, pr);
     mpf_init2(tmpim, pr);
@@ -1164,10 +1168,10 @@ inline mpcomplex::mpcomplex(const std::complex<_Float128> &a, mp_prec_t pr, mp_p
     mpc_init3(mpc, pr, pi);
 
     mpfr_init2(mp_real, pr);
-    mpfr_set_float128((mpfr_ptr)mp_real, a.real(), mpreal::default_rnd);
+    mpfr_set_float128(mp_real.mpfr_ptr(), a.real(), mpreal::default_rnd);
 
     mpfr_init2(mp_imag, pi);
-    mpfr_set_float128((mpfr_ptr)mp_imag, a.imag(), mpreal::default_rnd);
+    mpfr_set_float128(mp_imag.mpfr_ptr(), a.imag(), mpreal::default_rnd);
 
     mpc_set_fr_fr(mpc, mp_real, mp_imag, mode);
     mpfr_clear(mp_imag);
@@ -1189,8 +1193,8 @@ inline std::complex<_Float128> cast2complex_Float128(const mpcomplex &b) {
     mpreal re_tmp, im_tmp;
     re_tmp = b.real();
     im_tmp = b.imag();
-    q.real(mpfr_get_float128((mpfr_ptr)(re_tmp), mpreal::default_rnd));
-    q.imag(mpfr_get_float128((mpfr_ptr)(im_tmp), mpreal::default_rnd));
+    q.real(mpfr_get_float128((re_tmp).mpfr_ptr(), mpreal::default_rnd));
+    q.imag(mpfr_get_float128((im_tmp).mpfr_ptr(), mpreal::default_rnd));
     return q;
 }
 #endif

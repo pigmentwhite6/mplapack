@@ -2,6 +2,10 @@
  * Copyright (c) 2008-2010
  *	Nakata, Maho
  * 	All rights reserved.
+ * 
+ * Copyright (c) 2025
+ *  Prajval K
+ *  All rights reserved.
  *
  * $Id: mplapack_utils_mpfr.h,v 1.9 2010/08/07 03:15:46 nakatamaho Exp $
  *
@@ -47,19 +51,19 @@ using namespace mpfr;
 #endif
 
 inline void printnum(mpreal rtmp) {
-    mpfr_printf(MPFR_FORMAT, mpfr_ptr(rtmp));
+    mpfr_printf(MPFR_FORMAT, rtmp.mpfr_ptr());
     return;
 }
 
 inline void printnum_short(mpreal rtmp) {
-    mpfr_printf(MPFR_SHORT_FORMAT, mpfr_ptr(rtmp));
+    mpfr_printf(MPFR_SHORT_FORMAT, rtmp.mpfr_ptr());
     return;
 }
 inline void printnum(mpcomplex ctmp) {
     mpreal cre, cim;
     cre = ctmp.real();
     cim = ctmp.imag();
-    mpfr_printf(MPFR_FORMAT MPFR_FORMAT "i", mpfr_ptr(cre), mpfr_ptr(cim));
+    mpfr_printf(MPFR_FORMAT MPFR_FORMAT "i", cre.mpfr_ptr(), cim.mpfr_ptr());
     return;
 }
 
@@ -67,30 +71,30 @@ inline void printnum_short(mpcomplex ctmp) {
     mpreal cre, cim;
     cre = ctmp.real();
     cim = ctmp.imag();
-    mpfr_printf(MPFR_SHORT_FORMAT MPFR_SHORT_FORMAT "i", mpfr_ptr(cre), mpfr_ptr(cim));
+    mpfr_printf(MPFR_SHORT_FORMAT MPFR_SHORT_FORMAT "i", cre.mpfr_ptr(), cim.mpfr_ptr());
     return;
 }
 
 inline void sprintnum(char *buf, mpreal rtmp) {
-    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_FORMAT, mpfr_ptr(rtmp));
+    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_FORMAT, rtmp.mpfr_ptr());
     return;
 }
 inline void sprintnum_short(char *buf, mpreal rtmp) {
-    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_SHORT_FORMAT, mpfr_ptr(rtmp));
+    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_SHORT_FORMAT, rtmp.mpfr_ptr());
     return;
 }
 inline void sprintnum(char *buf, mpcomplex ctmp) {
     mpreal cre, cim;
     cre = ctmp.real();
     cim = ctmp.imag();
-    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_FORMAT MPFR_FORMAT "i", mpfr_ptr(cre), mpfr_ptr(cim));
+    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_FORMAT MPFR_FORMAT "i", cre.mpfr_ptr(), cim.mpfr_ptr());
     return;
 }
 inline void sprintnum_short(char *buf, mpcomplex ctmp) {
     mpreal cre, cim;
     cre = ctmp.real();
     cim = ctmp.imag();
-    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_SHORT_FORMAT MPFR_SHORT_FORMAT "i", mpfr_ptr(cre), mpfr_ptr(cim));
+    mpfr_snprintf(buf, __MPLAPACK_BUFLEN__, MPFR_SHORT_FORMAT MPFR_SHORT_FORMAT "i", cre.mpfr_ptr(), cim.mpfr_ptr());
     return;
 }
 #endif
